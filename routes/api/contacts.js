@@ -1,19 +1,28 @@
-import express from "express";
-import ctrl from "../../controllers/contactControllers.js";
-import isEmptyBody from "../../middlewares/isEmptyBody.js";
+const express = require("express");
 
-const contactsRouter = express.Router();
+const ctrl = require("../../controllers/contacts");
 
-contactsRouter.get("/", ctrl.getAll);
+const { validateBody, isValidId } = require("../../middlewares");
 
-contactsRouter.get("/:contactId", ctrl.getById);
+const { schemas } = require("../../models/contact");
 
-contactsRouter.post("/", isEmptyBody, ctrl.createContact);
+const router = express.Router();
 
-contactsRouter.put("/:contactId", isEmptyBody, ctrl.updateContact);
+router.get("/", ctrl.getAll);
 
-contactsRouter.delete("/:contactId", ctrl.deleteContact);
+router.get("/:id", isValidId, ctrl.getById);
 
-contactsRouter.patch("/:contactId/favorites", ctrl.addToFavorites);
+router.post("/", validateBody(schemas.addSchema), ctrl.add);
 
-export default contactsRouter;
+router.delete("/:id", isValidId, ctrl.deletebyId);
+
+router.put("/:id", isValidId, validateBody(schemas.addSchema), ctrl.updateById);
+
+router.patch(
+  "/:id/favorite",
+  isValidId,
+  validateBody(schemas.updateFavoriteSchema),
+  ctrl.updateFavorite
+);
+
+module.exports = router;
