@@ -1,32 +1,27 @@
 const { Schema, model } = require('mongoose');
-
 const Joi = require('joi');
-
 const handleMongooseError = require('../helpers/handleMongooseError');
 
 const nameRegex = '^[A-Z][a-z]+ [A-Z][a-z]+$';
-
 
 const contactSchema = new Schema(
   {
     name: {
       type: String,
-      required: [true, 'Set name for contact'],
+      required: true,
     },
-
     email: {
       type: String,
+      required: true,
     },
-
     phone: {
       type: String,
+      required: true,
     },
-
     favorite: {
       type: Boolean,
       default: false,
     },
-
     owner: {
       type: Schema.Types.ObjectId,
       ref: 'user',
@@ -42,12 +37,9 @@ const addSchema = Joi.object({
   name: Joi.string().pattern(new RegExp(nameRegex)).required().messages({
     'any.required': `Missing required name field`,
   }),
-
   email: Joi.string().required().messages({
     'any.required': `Missing required email field`,
   }),
-
-  
   favorite: Joi.boolean().optional(),
 });
 
@@ -58,6 +50,7 @@ const updateFavoriteSchema = Joi.object({
 });
 
 const Contact = model('contacts', contactSchema);
+
 
 module.exports = {
   Contact,
