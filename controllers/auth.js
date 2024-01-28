@@ -9,13 +9,15 @@ const path = require('path');
 const fs = require('fs/promises');
 const Jimp = require('jimp');
 
-
 const { User } = require('../models/user');
+
 const HttpError = require('../helpers/HttpError');
 const ctrlWrapper = require('../helpers/ctrlWrapper');
 const sendEmail = require('../helpers/sendEmail');
 
 const { SECRET_KEY, BASE_URL } = process.env;
+
+const avatarDir = path.join(__dirname, '../', 'public', 'avatars');
 
 const avatarDir = path.join(__dirname, '../', 'public', 'avatars');
 
@@ -169,7 +171,6 @@ module.exports = {
   current: ctrlWrapper(current),
   logout: ctrlWrapper(logout),
   updateAvatar: ctrlWrapper(updateAvatar),
-
   verifyEmail: ctrlWrapper(verifyEmail),
   repeatEmailVerify: ctrlWrapper(repeatEmailVerify),
 };
