@@ -11,7 +11,6 @@ const Jimp = require('jimp');
 
 
 const { User } = require('../models/user');
-
 const HttpError = require('../helpers/HttpError');
 const ctrlWrapper = require('../helpers/ctrlWrapper');
 const sendEmail = require('../helpers/sendEmail');
@@ -40,7 +39,6 @@ const register = async (req, res) => {
     avatarURL,
     verificationToken,
   });
-
   const verifyEmail = {
     to: email,
     subject: 'Verify your email',
@@ -61,8 +59,8 @@ const verifyEmail = async (req, res) => {
   const { verificationToken } = req.params;
   const user = await User.findOne({ verificationToken });
   if (!user) {
-    throw HttpError(404, 'User not found');
-  }
+    throw HttpError(404, 'User not found')
+  };
 
   await User.findByIdAndUpdate(user._id, {
     verify: true,
