@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@getbrevo/brevo": "^2.0.0-beta.4",
     "bcrypt": "^5.1.1",
     "cors": "2.8.5",
     "cross-env": "7.0.3",
@@ -26,9 +27,9 @@
     "mongoose": "^7.4.2",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
-    "nanoid": "^5.0.4",
     "nodemailer": "^6.9.8",
-    "re2": "^1.20.9"
+    "re2": "^1.20.9",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "eslint": "7.19.0",

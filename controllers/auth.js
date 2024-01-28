@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { v4: uuidv4 } = require('uuid');
 
 require('dotenv').config();
 
@@ -8,7 +9,6 @@ const path = require('path');
 const fs = require('fs/promises');
 const Jimp = require('jimp');
 
-const { nanoid } = require('nanoid');
 
 const { User } = require('../models/user');
 
@@ -32,7 +32,7 @@ const register = async (req, res) => {
 
   const avatarURL = gravatar.url(email);
 
-  const verificationToken = nanoid();
+  const verificationToken = uuidv4();
 
   const newUser = await User.create({
     ...req.body,

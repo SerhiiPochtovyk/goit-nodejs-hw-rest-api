@@ -1,22 +1,16 @@
-const nodemailer = require('nodemailer');
+const brevo = require("@getbrevo/brevo");
 
-require("dotenv").config();
+const { EMAIL, BREVO_API_KEY } = process.env;
 
-const transporter = nodemailer.createTransport({
-  host: 'smtp.ethereal.email',
-  port: 587,
-  secure: false,
-  auth: {
-      user: 'maida.ratke81@ethereal.email',
-      pass: 'xFGj7ANjUtgXv14BpB'
-  }
-})
+const apiInstance = new brevo.TransactionalEmailsApi();
 
-const mailer = message => { 
-  transporter.sendMail( message, (error, info)=> {
-    if(error) return console.log (error)
-    console.log ('Email sent: ', info)
-  }) 
-}
+apiInstance.authentications.apiKey.apiKey = BREVO_API_KEY;
 
-module.exports = mailer;
+const sendEmail = async (data) => {
+  const email = { ...data, sender: { email: EMAIL } };
+  await apiInstance.sendTransacEmail(email);
+  return true;
+};
+
+module.exports = sendEmail;
+
